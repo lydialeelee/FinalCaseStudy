@@ -17,7 +17,7 @@ This project meets the Course Concept Integration requirement because it uses a 
 
 #### Architecture Diagram
 
-![Architecture Diagram](assets/architecture design.png)
+![Architecture Diagram](assets/architecture_design.png)
 
 #### Data / Models / Services
 
