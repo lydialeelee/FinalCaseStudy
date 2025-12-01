@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -66,97 +101,36 @@ ul.task-list li input[type="checkbox"] {
 <section id="course-concepts" class="level4">
 <h4 class="anchored" data-anchor-id="course-concepts">Course Concept(s)</h4>
 <p>Week 11 — Docker &amp; Containerization This project implements the concepts from the Week 11 module on containerization. The API is packaged inside a Dockerfile that defines the environment, dependencies, port configuration, and runtime command. Building and running the service inside a Docker container allows for reproducibility across machines because it goes from Dockerfile to Image to Container workflow.</p>
+</section>
+<section id="architecture-diagram" class="level4">
+<h4 class="anchored" data-anchor-id="architecture-diagram">Architecture Diagram</h4>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="assets/architecture%20design.png" class="img-fluid figure-img"></p>
 <figcaption>Architecture Diagram</figcaption>
 </figure>
 </div>
-<p>The goal of this project is to demonstrate understanding of:</p>
-<p>Containerization (Docker)</p>
-<p>Reproducible environments 3 Python application structure</p>
-<p>Documentation and testing</p>
-<p>One-command execution for deployment</p>
-<p>All requirements from the assignment are met, including a Dockerfile, sample data, tests, and a single command used to build and run the system.</p>
-<p>System Overview Architecture</p>
-<p>The system consists of:</p>
-<p>A Python Flask API (src/app.py)</p>
-<p>A Docker container that packages Python 3.11 + Flask + the app</p>
-<p>A single run script (run.sh)</p>
-<p>Sample data and smoke tests</p>
-<p>Environment file (.env.example)</p>
-<p>The API exposes two endpoints:</p>
-<p>Endpoint Method Description /health GET Checks if the API is running /tip POST Calculates tip percentage Data Flow</p>
-<p>User sends a POST request to /tip with total_bill and tip in JSON format</p>
-<p>Flask validates the data</p>
-<p>The API computes the percentage</p>
-<p>A JSON response is returned</p>
-<p>How to Run the Project Prerequisites</p>
-<p>Docker Desktop installed</p>
-<p>Docker engine running</p>
-<p>macOS / Windows / Linux supported</p>
-<p>(Optional) Python installed for local testing</p>
-<p>Run with ONE command</p>
-<p>This is the command required by your assignment:</p>
-<p>./run.sh</p>
-<p>This script will:</p>
-<p>Build the Docker image</p>
-<p>Run the container</p>
-<p>Expose port 8080</p>
-<p>Manual Run Commands</p>
-<p>Build the image:</p>
-<p>docker build -t tip-api:latest .</p>
-<p>Run the container:</p>
-<p>docker run –rm -p 8080:8080 –env-file .env.example tip-api:latest</p>
-<p>Test the endpoints</p>
-<p>Health Check:</p>
-<p>curl http://127.0.0.1:8080/health</p>
-<p>Response:</p>
-<p>{“status”: “ok”}</p>
-<p>Tip Calculation:</p>
-<p>curl -X POST http://127.0.0.1:8080/tip<br>
--H “Content-Type: application/json”<br>
--d ‘{“total_bill”: 50, “tip”: 10}’</p>
-<p>Response:</p>
-<p>{“total_bill”: 50, “tip”: 10, “tip_pct”: 0.2}</p>
-<p>Design Decisions Why Flask?</p>
-<p>Lightweight and easy for small APIs</p>
-<p>Quick to containerize</p>
-<p>Perfect for demonstration purposes</p>
-<p>Why Docker?</p>
-<p>Ensures reproducibility</p>
-<p>Consistent Python version</p>
-<p>Easy for graders and other users to install and run</p>
-<p>Folder Structure tip-calculator-api/ │ ├── src/app.py # Flask application ├── tests/smoke_test.sh # Smoke test script ├── assets/sample_request.json ├── Dockerfile # Container configuration ├── run.sh # One-command execution script ├── requirements.txt ├── .env.example └── README.md</p>
-<p>Error Handling</p>
-<p>Validates JSON input</p>
-<p>Ensures values are numeric</p>
-<p>Returns appropriate HTTP error messages</p>
-<p>Results &amp; Evaluation What Works</p>
-<p>API successfully calculates tip percentages</p>
-<p>Smoke tests pass</p>
-<p>Docker builds cleanly</p>
-<p>One-command run works on any machine</p>
-<p>Health endpoint reliably reports system status</p>
-<p>Performance</p>
-<p>API responds instantly (very small computation)</p>
-<p>Container size is minimal due to python:3.11-slim base image</p>
-<p>Limitations</p>
-<p>No built-in UI</p>
-<p>No persistence or database</p>
-<p>Assumes simple numeric input only</p>
-<p>What’s Next (Future Enhancements)</p>
-<p>Possible extensions include:</p>
-<p>Add “recommended tip” percentages (15%, 18%, 20%)</p>
-<p>Add a “split bill” feature</p>
-<p>Deploy to a cloud provider (Render, Railway, AWS ECS)</p>
-<p>Add detailed validation and logging</p>
-<p>Add OpenAPI/Swagger documentation</p>
-<p>Links</p>
-<p>GitHub Repository: [Insert your repo link here]</p>
-<p>Docker Hub Image (optional): if you publish it</p>
-<p>Assignment PDF requirements: (your professor’s link)</p>
 </section>
+<section id="data-models-services" class="level4">
+<h4 class="anchored" data-anchor-id="data-models-services">Data / Models / Services</h4>
+<p>Data: This project does not use any external datasets. No data is stored.</p>
+<p>Format: JSON Size: Not applicable (request-time only) License: None (no external data sources)</p>
+<p>Models: There is no use of machine learning models. The system performs a simple calculation (tip / total_bill) to compute the tip percentage.</p>
+<p>Format: Not applicable Size: Not applicable License: Not applicable</p>
+<p>Services: * Flask API providing /health and /tip endpoints * Docker container for reproducible execution environment * No third-party APIs or cloud services are used</p>
+</section>
+</section>
+<section id="how-to-run-local" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-run-local">3) How to Run (Local)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># build the container</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> tip-calculator:latest .</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># run the container</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-p</span> 8080:8080 tip-calculator:latest</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># health check</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:8080/health</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 

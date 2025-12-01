@@ -1,33 +1,41 @@
 from flask import Flask, request, jsonify
-import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route("/health")
+@app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok"})
+    return jsonify({"status": "ok"}), 200
 
 @app.route("/tip", methods=["POST"])
 def calculate_tip():
     data = request.get_json()
 
-    if not data:
-        return jsonify({"error": "No JSON body provided"}), 400
+    # Validate JSON
+    if not data or "total_bill" not in data or "tip" not in data:
+        return jsonify({"error": "total_bill and tip are required"}), 400
 
-    total_bill = data.get("total_bill")
-    tip_amount = data.get("tip")
+    total_bill = data["total_bill"]
+    tip = data["tip"]
 
-    if not isinstance(total_bill, (int, float)) or not isinstance(tip_amount, (int, float)):
-        return jsonify({"error": "total_bill and tip must be numbers"}), 400
+    # Validate numbers
+    try:
+        total_bill = float(total_bill)
+        tip = float(tip)
+    except:
+        return jsonify({"error": "total_bill and tip must be numeric"}), 400
 
-    tip_pct = tip_amount / total_bill
+    if total_bill <= 0:
+        return jsonify({"error": "total_bill must be greater than 0"}), 400
+
+    tip_pct = tip / total_bill
 
     return jsonify({
         "total_bill": total_bill,
-        "tip": tip_amount,
-        "tip_pct": round(tip_pct, 4)
-    })
+        "tip": tip,
+        "tip_pct": tip_pct
+    }), 200
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=8080)

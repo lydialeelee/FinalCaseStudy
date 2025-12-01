@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tip Calculator (Frontend)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+    }
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0073e6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005bb5;
+    }
+    #result {
+      margin-top: 16px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Tip Calculator</h2>
+    <label>Total Bill ($)</label>
+    <input type="number" id="total" placeholder="Enter total bill" />
+
+    <label>Tip Amount ($)</label>
+    <input type="number" id="tip" placeholder="Enter tip amount" />
+
+    <button onclick="calculateTip()">Calculate Tip %</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    async function calculateTip() {
+      const total = parseFloat(document.getElementById("total").value);
+      const tip = parseFloat(document.getElementById("tip").value);
+
+      if (!total || !tip) {
+        document.getElementById("result").innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8080/tip", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ total_bill: total, tip: tip })
+        });
+
+        const data = await response.json();
+        document.getElementById("result").innerText = `Tip Percentage: ${(data.tip_pct * 100).toFixed(2)}%`;
+      } catch (err) {
+        document.getElementById("result").innerText = "Error connecting to backend.";
+      }
+    }
+  </script>
+</body>
+</html>
