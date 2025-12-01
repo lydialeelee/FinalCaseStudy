@@ -25,14 +25,18 @@ Data:
 This project does not use any external datasets. No data is stored.
 
 Format: JSON
+
 Size: Not applicable (request-time only)
+
 License: None (no external data sources)
 
 Models:
 There is no use of machine learning models. The system performs a simple calculation (tip / total_bill) to compute the tip percentage.
 
 Format: Not applicable
+
 Size: Not applicable
+
 License: Not applicable
 
 Services:
