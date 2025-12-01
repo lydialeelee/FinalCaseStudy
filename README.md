@@ -13,8 +13,7 @@ This project allows you to input a total bill amount and a tip amount, and it wi
 
 #### Course Concept(s)
 
-Week 11 — Docker & Containerization
-This project implements the concepts from the Week 11 module on containerization. The API is packaged inside a Dockerfile that defines the environment, dependencies, port configuration, and runtime command. Building and running the service inside a Docker container allows for reproducibility across machines because it goes from Dockerfile to Image to Container workflow.
+This project meets the Course Concept Integration requirement because it uses a Flask API and runs it inside a Docker container, both of which we learned in class. The API has two routes and takes in numbers from the user to calculate a tip percentage. Putting the whole app into Docker makes it easy to run anywhere and keeps everything consistent.
 
 #### Architecture Diagram
 
