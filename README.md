@@ -96,5 +96,15 @@ Future Improvements:
 * Extra Features: Add a feature to suggest common tip percentages (18%, 20%, 25%).
 * Extra Features: Add a "split bill" function to calculate the cost per person.
 
-7) Links
+## 7) Links
 * Github Repository: [https://github.com/lydialeelee/FinalCaseStudy]
+
+## Extra Credit: CI Pipeline
+
+A continuous integration (CI) workflow was added using GitHub Actions. On every push to the `main` branch, GitHub automatically:
+
+1. Installs Python and the project dependencies  
+2. Starts the Flask API  
+3. Runs the smoke test script  
+
+This ensures the API is always functioning correctly and any breaking changes are caught immediately.
